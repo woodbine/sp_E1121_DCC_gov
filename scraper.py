@@ -6,8 +6,8 @@ from datetime import datetime
 from bs4 import BeautifulSoup
 
 # Set up variables
-entity_id = "E1021_DCC_gov"
-url = "http://www.derbyshire.gov.uk/council/council_tax/spending/"
+entity_id = "E1121_DCC_gov"
+url = "http://www.devon.gov.uk/index/councildemocracy/councilfinance/expenditure-over500.htm"
 
 # Set up functions
 def convert_mth_strings ( mth_string ):
@@ -23,19 +23,17 @@ html = urllib2.urlopen(url)
 soup = BeautifulSoup(html)
 
 # find all entries with the required class
-block = soup.find('ul',{'class':'plainList'})
+block = soup.find('div',{'class':'ssp_head'})
 links = block.findAll('a', href=True)
 
 for link in links:
-	js = link['onclick']
-	#  grab the data out of the onclick instrution from javascript
-	if 'excel' in js:
+	url = 'http://www.devon.gov.uk/' + link['href']
+	if '.csv' in url:
 		#  clean up the onclick data
-		url = js.replace("_gaq.push(['_trackEvent', 'Downloads', 'excel', '",'').replace("'])",'')
 		title = link.contents[0]
 		# create the right strings for the new filename
-		csvYr = title.split(' ')[4]
-		csvMth = title.split(' ')[3][:3]
+		csvYr = title.split(' ')[-1]
+		csvMth = title.split(' ')[-2][:3]
 		csvMth = csvMth.upper()
 		csvMth = convert_mth_strings(csvMth);
 		filename = entity_id + "_" + csvYr + "_" + csvMth + ".csv"
