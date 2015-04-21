@@ -26,7 +26,7 @@ soup = BeautifulSoup(html)
 block = soup.find('div',{'class':'ssp_head'})
 links = block.findAll('a', href=True)
 	
-for fileLink in fileLinks:
+for link in links:
 	url = 'http://www.devon.gov.uk/' + fileLink['href']
 	if '.csv' in url:
 		#  clean up the onclick data
