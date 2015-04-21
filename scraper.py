@@ -23,29 +23,20 @@ html = urllib2.urlopen(url)
 soup = BeautifulSoup(html)
 
 # find all entries with the required class
-block = soup.find('div',{'id':'list'})
-pageLinks = block.findAll('a', href=True)
-
-for pageLink in pageLinks:
-	print pageLink
-	pageUrl = 'http://www.devon.gov.uk/' + link['href']
-	html2 = urllib2.urlopen(pageUrl)
-	soup2 = BeautifulSoup(html2)
+block = soup.find('div',{'class':'ssp_head'})
+links = block.findAll('a', href=True)
 	
-	yrBlock = soup2.find('div',{'id':'download'})
-	fileLinks = yrBlock.findAll('a',href=True)
-	
-	for fileLink in fileLinks:
-		url = 'http://www.devon.gov.uk/' + fileLink['href']
-		if '.csv' in url:
-			#  clean up the onclick data
-			title = link.contents[0]
-			# create the right strings for the new filename
-			csvYr = title.split(' ')[-1]
-			csvMth = title.split(' ')[-2][:3]
-			csvMth = csvMth.upper()
-			csvMth = convert_mth_strings(csvMth);
-			filename = entity_id + "_" + csvYr + "_" + csvMth + ".csv"
-			todays_date = str(datetime.now())
-			scraperwiki.sqlite.save(unique_keys=['l'], data={"l": url, "f": filename, "d": todays_date })
-			print filename
+for fileLink in fileLinks:
+	url = 'http://www.devon.gov.uk/' + fileLink['href']
+	if '.csv' in url:
+		#  clean up the onclick data
+		title = link.contents[0]
+		# create the right strings for the new filename
+		csvYr = title.split(' ')[-1]
+		csvMth = title.split(' ')[-2][:3]
+		csvMth = csvMth.upper()
+		csvMth = convert_mth_strings(csvMth);
+		filename = entity_id + "_" + csvYr + "_" + csvMth + ".csv"
+		todays_date = str(datetime.now())
+		scraperwiki.sqlite.save(unique_keys=['l'], data={"l": url, "f": filename, "d": todays_date })
+		print filename
