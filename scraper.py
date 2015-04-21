@@ -24,6 +24,7 @@ soup = BeautifulSoup(html)
 
 # find all entries with the required class
 pageLinks = soup.findAll('a', href=True)
+print pageLinks
 
 for pageLink in pageLinks:
 	pageUrl = 'http://www.devon.gov.uk/' + link['href']
