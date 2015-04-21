@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup
 
 # Set up variables
 entity_id = "E1221_DCC_gov"
-url = "https://www.dorsetforyou.com/article/400828/Expenditure-over-500"
+url = "https://www.dorsetforyou.com"
 
 # Set up functions
 def convert_mth_strings ( mth_string ):
