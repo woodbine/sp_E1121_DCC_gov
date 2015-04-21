@@ -24,6 +24,7 @@ soup = BeautifulSoup(html)
 
 # find all entries with the required class
 block = soup.find('div',{'id':'list'})
+print block
 pageLinks = block.findAll('a', href=True)
 
 for pageLink in pageLinks:
