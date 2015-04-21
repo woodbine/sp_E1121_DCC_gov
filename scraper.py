@@ -35,7 +35,7 @@ for pageLink in pageLinks:
 	fileLinks = yrBlock.findAll('a',href=True)
 	
 	for fileLink in fileLinks:
-		url = fileLink['href']
+		url = 'http://www.devon.gov.uk/' + fileLink['href']
 		if '.csv' in url:
 			#  clean up the onclick data
 			title = link.contents[0]
