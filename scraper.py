@@ -27,7 +27,7 @@ print soup
 pageLinks = soup.findAll('a', href=True)
 
 for pageLink in pageLinks:
-	pageUrl = 'http://www.devon.gov.uk/' + link['href']
+	pageUrl = 'http://www.dorsetforyou.com/' + link['href']
 	if 'Expenditure' in pageUrl:
 		html2 = urllib2.urlopen(pageUrl)
 		soup2 = BeautifulSoup(html2)
@@ -36,7 +36,7 @@ for pageLink in pageLinks:
 		fileLinks = yrBlock.findAll('a',href=True)
 		
 		for fileLink in fileLinks:
-			url = 'http://www.devon.gov.uk/' + fileLink['href']
+			url = 'http://www.dorsetforyou.com/' + fileLink['href']
 			if '.csv' in url:
 				#  clean up the onclick data
 				title = link.contents[0]
