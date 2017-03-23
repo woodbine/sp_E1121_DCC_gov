@@ -84,7 +84,7 @@ def convert_mth_strings ( mth_string ):
 #### VARIABLES 1.0
 
 entity_id = "E1121_DCC_gov"
-url = "http://www.devon.gov.uk/index/councildemocracy/councilfinance/expenditure-over500.htm"
+url = "https://github.com/Devon-County-Council/spending"
 errors = 0
 data = []
 
@@ -96,14 +96,15 @@ soup = BeautifulSoup(html, 'lxml')
 
 #### SCRAPE DATA
 
-block = soup.find('div',{'class':'ssp_head'})
-links = block.findAll('a', href=True)
-for link in links:
-    url = 'http://www.devon.gov.uk/' + link['href']
+blocks = soup.find_all('tr',{'class':'js-navigation-item'})
+for block in blocks:
+    link = block.find('td', 'content').find('a', href=True)
+    url = 'https://github.com' + link['href']
     if '.csv' in url or '.xls' in url:
         title = link.contents[0]
-        csvYr = title.split(' ')[-1]
-        csvMth = title.split(' ')[-2][:3]
+        raw_text = title.split('_')[-1].split('.')[0]
+        csvYr = raw_text[:4]
+        csvMth = raw_text[-2:]
         csvMth = convert_mth_strings(csvMth.upper())
         data.append([csvYr, csvMth, url])
 
